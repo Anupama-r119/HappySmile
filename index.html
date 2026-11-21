@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HappySmile voice assistant mockup, by Anupama</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#F8FBFA; --surface:#FFFFFF; --sunk:#F0F5F4; --ink:#26302F; --muted:#66706E; --line:#E2EBE9;
+  --accent:#1F6F78; --accent-ink:#FFFFFF; --accent-soft:#E3F0EF;
+  --warn:#9A5A1E; --warn-soft:#FBF0E4; --urgent:#A83A2E; --urgent-soft:#FBE8E4; --good:#2E7D4F; --good-soft:#E5F3EA;
+  --c-light:#CFE3E0;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#171C1B; --surface:#1F2524; --sunk:#262D2C; --ink:#EAF0EF; --muted:#9AA6A4; --line:#33403E;
+    --accent:#62B6BE; --accent-ink:#0E2427; --accent-soft:#1D3436;
+    --warn:#E0A56B; --warn-soft:#3A2D1F; --urgent:#EE8A7A; --urgent-soft:#3D2420; --good:#7CC79A; --good-soft:#1E3326;
+    --c-light:#2F4846; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171C1B; --surface:#1F2524; --sunk:#262D2C; --ink:#EAF0EF; --muted:#9AA6A4; --line:#33403E;
+  --accent:#62B6BE; --accent-ink:#0E2427; --accent-soft:#1D3436;
+  --warn:#E0A56B; --warn-soft:#3A2D1F; --urgent:#EE8A7A; --urgent-soft:#3D2420; --good:#7CC79A; --good-soft:#1E3326;
+  --c-light:#2F4846; color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.top{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:14px 24px;border-bottom:1px solid var(--line);background:var(--surface)}
+.brand{font-family:var(--serif);font-size:20px;font-weight:600;display:flex;align-items:center;gap:10px}
+.brand .mark{width:26px;height:26px;border-radius:50%;background:var(--accent);display:grid;place-items:center}
+nav.tabs{display:flex;gap:4px;flex-wrap:wrap}
+nav.tabs a{padding:7px 12px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:500}
+nav.tabs a[aria-current="page"]{background:var(--accent-soft);color:var(--ink)}
+main{max-width:1120px;margin:0 auto;padding:26px 24px 72px}
+.view{display:none}.view.on{display:block}
+.lede{color:var(--muted);max-width:68ch;margin:6px 0 24px}
+
+.btn{border:0;border-radius:10px;padding:10px 15px;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.block{width:100%}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:6px 11px;font-size:13px;border-radius:8px}
+.btn.dark{background:var(--ink);color:var(--bg)}
+.btn.danger{background:var(--urgent);color:#fff}
+.input{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface)}
+select.input{width:auto;padding:7px 10px}
+label.f{display:block;font-size:13px;color:var(--muted);margin:12px 0 5px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;flex-wrap:wrap;background:var(--surface)}
+.seg button{border:0;background:transparent;border-radius:999px;padding:5px 11px;font-size:13px;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.panel h2{font-size:18px;margin-bottom:2px}
+.sub{font-size:13.5px;color:var(--muted);margin:0 0 12px}
+.pill{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:500;background:var(--sunk);color:var(--muted);white-space:nowrap}
+.pill.urgent{background:var(--urgent-soft);color:var(--urgent)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.ok{background:var(--accent-soft);color:var(--accent)}
+.pill.good{background:var(--good-soft);color:var(--good)}
+.linkbtn{background:none;border:0;color:var(--accent);cursor:pointer;font-size:13.5px;padding:0;font-weight:500}
+.ph{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.count{font-family:var(--sans);font-size:12px;font-weight:600;background:var(--ink);color:var(--bg);border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:3px}
+
+/* patient */
+.phones{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+.phonewrap{display:flex;flex-direction:column;align-items:center;gap:12px;width:340px;max-width:100%}
+.phone{width:100%;border:1px solid var(--line);border-radius:34px;background:var(--surface);padding:22px 20px 26px;min-height:620px}
+.phone .notch{width:90px;height:6px;border-radius:6px;background:var(--line);margin:0 auto 18px}
+.phone h2{font-size:24px;margin:6px 0 4px}
+.phone p{margin:0 0 14px}
+.caption{font-size:13px;color:var(--muted);text-align:center;max-width:34ch}
+.caption strong{color:var(--ink);font-weight:600}
+.pain{margin:16px 0 4px;padding:12px;border-radius:12px;background:var(--urgent-soft)}
+.pain b{display:block;color:var(--urgent);font-size:14px;margin-bottom:2px}
+.pain span{display:block;font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.consent{display:flex;gap:8px;font-size:12.5px;color:var(--muted);margin:14px 0 10px;cursor:pointer}
+.consent input{accent-color:var(--accent);margin-top:2px}
+.hint{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+.tick{width:44px;height:44px;border-radius:50%;background:var(--accent-soft);display:grid;place-items:center;margin:8px 0 10px}
+.opt{border-top:1px solid var(--line);padding:12px 0}
+.opt h3{font-family:var(--sans);font-size:14px;font-weight:600;margin-bottom:6px}
+.opt p{font-size:13px;color:var(--muted);margin:0 0 8px}
+.fine{font-size:12px;color:var(--muted);margin-top:12px}
+
+/* front desk */
+.dhead{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.dhead h1{font-size:28px}
+.dhead p{margin:2px 0 0;color:var(--muted)}
+.dhead p b{color:var(--ink);font-weight:600}
+.dgrid{display:grid;grid-template-columns:1.7fr 1fr;gap:16px;margin-bottom:16px;align-items:start}
+.task{display:grid;grid-template-columns:4px 1fr auto;gap:0 12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.task:first-of-type{border-top:0}
+.task .bar{align-self:stretch;border-radius:4px;background:var(--warn)}
+.task.hard .bar{background:var(--urgent)}
+.task.calm .bar{background:var(--line)}
+.task .body{min-width:0;cursor:pointer}
+.task .t{font-weight:600;font-size:15px}
+.task .t span{font-weight:400;color:var(--muted)}
+.task .c{font-size:13.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.task .r{display:flex;align-items:center;gap:8px}
+.task .w{font-size:12.5px;color:var(--muted);text-align:right;min-width:58px}
+.task.hard .w{color:var(--urgent);font-weight:600}
+.task .outcome{grid-column:2/-1;display:none;gap:6px;flex-wrap:wrap;align-items:center;padding-top:8px}
+.task .outcome.on{display:flex}
+.task .outcome span{font-size:13px;color:var(--muted);margin-right:2px}
+.divider{font-size:12px;font-weight:600;color:var(--muted);padding:12px 0 2px;border-top:1px solid var(--line)}
+.empty{padding:14px 0;color:var(--muted);font-size:14px}
+.brow{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-top:1px solid var(--line);font-size:14px;cursor:pointer}
+.brow:first-of-type{border-top:0}
+.brow b{font-weight:600}
+.brow small{display:block;color:var(--muted);font-size:12.5px}
+.brow .when{text-align:right;color:var(--ink);font-size:13.5px;white-space:nowrap}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:620px}
+th{text-align:left;font-weight:500;color:var(--muted);font-size:12.5px;padding:7px 10px;border-bottom:1px solid var(--line)}
+td{padding:10px;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+#rows tr{cursor:pointer}
+#rows tr:hover{background:var(--sunk)}
+td .n{font-weight:600}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.ready{font-size:13.5px}
+.ready::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;background:var(--line)}
+.ready.now::before{background:var(--accent)}.ready.month::before{background:#8DC2BC}.ready.look::before{background:#D9CBB3}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(20,26,25,.3);opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(480px,100%);background:var(--surface);border-left:1px solid var(--line);transform:translateX(100%);transition:transform .25s ease;overflow-y:auto;padding:calc(20px + env(safe-area-inset-top,0px)) 22px calc(28px + env(safe-area-inset-bottom,0px));z-index:5}
+.drawer.on{transform:none}
+.drawer .head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.drawer h2{font-size:24px}
+.drawer section{border-top:1px solid var(--line);padding:14px 0}
+.drawer section h3{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--muted);margin-bottom:8px}
+.drawer dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font-size:14px}
+.drawer dt{color:var(--muted)}.drawer dd{margin:0}
+.tl{list-style:none;padding:0;margin:0;font-size:13.5px}
+.tl li{display:flex;gap:10px;padding:3px 0}
+.tl time{color:var(--muted);min-width:62px}
+.tx{display:flex;flex-direction:column;gap:8px;font-size:14px}
+.tx p{margin:0;max-width:92%;padding:8px 11px;border-radius:12px;background:var(--sunk)}
+.tx p.ai{background:var(--accent-soft);align-self:flex-start}
+.tx p.lead{align-self:flex-end}
+.tx p small{display:block;font-size:11px;color:var(--muted)}
+.x{border:1px solid var(--line);background:transparent;border-radius:999px;width:34px;height:34px;cursor:pointer;font-size:18px;line-height:1}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+.toast.on{opacity:1}
+
+@media (max-width:920px){
+  .dgrid,.lgrid,.flowwrap,.sgrid,.rules{grid-template-columns:1fr}
+  .ins{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .kp{border-left:0;border-top:1px solid var(--line)}
+  .kp:nth-child(-n+2){border-top:0}
+}
+@media (max-width:560px){
+  main{padding:18px 14px 60px}
+  .top{padding:12px 16px;gap:10px}
+  .task{grid-template-columns:4px 1fr}
+  .task .r{grid-column:2;margin-top:8px}
+}
+@media (prefers-reduced-motion:reduce){.drawer,.scrim,.toast{transition:none}}
+.col{display:flex;flex-direction:column;gap:16px}
+svg.mini{width:100%;height:130px;display:block}
+.byline{margin-left:auto;font-size:13px;color:var(--muted)}
+.themebtn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;color:var(--ink)}
+:root{--c-treat:var(--accent);--c-visit:#8DC2BC;--c-urgent:#C25B45;--c-other:#D9CBB3}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--c-visit:#3F7D79;--c-urgent:#E07D66;--c-other:#7C6F5C}}
+:root[data-theme="dark"]{--c-visit:#3F7D79;--c-urgent:#E07D66;--c-other:#7C6F5C}
+:root[data-theme="light"]{color-scheme:light}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="mark" aria-hidden="true"><svg width="14" height="10" viewBox="0 0 14 10"><path d="M1 2c2 5 10 5 12 0" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span>HappySmile</div>
+  <nav class="tabs" aria-label="Screens">
+    <a href="#patient">Patient view</a>
+    <a href="#dashboard">Front desk</a>
+  </nav>
+  <span class="byline">Mockup by Anupama</span>
+  <button class="themebtn" id="theme" aria-label="Switch between light and dark"><span id="themeicon" aria-hidden="true"></span><span id="themelabel"></span></button>
+</header>
+
+<main>
+<!-- PATIENT -->
+<section class="view" id="v-patient">
+  <h1 style="font-size:28px">The moment someone asks for a call</h1>
+  <p class="lede">What a person sees on HappySmile’s site, from the enquiry to the confirmation that a call is on its way.</p>
+  <div class="phones">
+    <div class="phonewrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <h2>Get a call back</h2>
+        <p style="color:var(--muted);font-size:14px">Tell us what you’re looking for and we’ll call you within minutes.</p>
+        <label class="f" for="pn">Your name</label>
+        <input class="input" id="pn" value="Priya Bansal">
+        <label class="f" for="pp">Mobile number</label>
+        <input class="input" id="pp" value="+91 98110 41736">
+        <label class="f">What are you interested in?</label>
+        <div class="chips" data-single>
+          <button class="chip" aria-pressed="true">Braces or aligners</button>
+          <button class="chip" aria-pressed="false">Whitening</button>
+          <button class="chip" aria-pressed="false">Implants</button>
+          <button class="chip" aria-pressed="false">Root canal or filling</button>
+          <button class="chip" aria-pressed="false">Cleaning or check-up</button>
+          <button class="chip" aria-pressed="false">For my child</button>
+          <button class="chip" aria-pressed="false">Not sure yet</button>
+        </div>
+        <label class="f" for="pc">Nearest clinic</label>
+        <select class="input" id="pc" style="width:100%"><option>Saket, New Delhi</option><option>Lajpat Nagar, New Delhi</option><option>Dwarka, New Delhi</option></select>
+        <div class="pain">
+          <b>In pain or have swelling?</b>
+          <span>Don’t wait for a callback. Call your clinic directly so they can see you as soon as possible.</span>
+          <a class="btn danger block" href="tel:+911148702201" id="painbtn">Call Saket clinic now</a>
+        </div>
+        <label class="consent"><input type="checkbox" id="consent"> HappySmile can call me about this enquiry. Calls are recorded to improve service.</label>
+        <button class="btn block" id="reqbtn" disabled data-toast="Request sent">Request a call</button>
+        <p class="hint" id="reqhint">Tick the box above so we can call you.</p>
+      </div>
+      <p class="caption"><strong>1. Enquiry form.</strong> Request a call works only after consent. Anyone in pain gets a direct line to their clinic.</p>
+    </div>
+    <div class="phonewrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="tick" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9" stroke="var(--accent)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h2>We’ll call you in about 3 minutes</h2>
+        <p style="font-size:14px">Asha, HappySmile’s AI assistant, will call to answer your questions and book a visit. You can ask for someone from our team at any point in the call.</p>
+        <div class="opt"><h3>Call language</h3>
+          <div class="seg" data-single><button aria-pressed="true">English</button><button aria-pressed="false">हिन्दी</button></div></div>
+        <div class="opt"><h3>Not a good time?</h3>
+          <div class="chips" data-single><button class="chip" aria-pressed="false">In an hour</button><button class="chip" aria-pressed="false">This evening</button><button class="chip" aria-pressed="false">Pick a time</button></div></div>
+        <div class="opt"><h3>Prefer to speak to a person?</h3>
+          <p>Our front desk will call you during clinic hours, usually within a few hours.</p>
+          <button class="btn ghost small" data-toast="Our team will call you">Ask our team to call</button></div>
+        <p class="fine">Asha will call from +91 11 4870 2200. We’ve sent these details to your WhatsApp too.</p>
+      </div>
+      <p class="caption"><strong>2. Confirmation.</strong> Honest about the AI, leads with speed, and always offers a person.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FRONT DESK -->
+<section class="view" id="v-dashboard">
+  <div class="dhead">
+    <div><h1>Good afternoon, Saket</h1><p id="todayline"></p></div>
+    <select class="input" aria-label="Clinic"><option>Saket clinic</option><option>Lajpat Nagar clinic</option><option>Dwarka clinic</option></select>
+  </div>
+  <div class="dgrid">
+    <div class="panel">
+      <div class="ph"><h2>Call next<span class="count" id="ncount"></span></h2><span class="sub" style="margin:0">Most urgent first</span></div>
+      <div id="tasks"></div>
+    </div>
+    <div class="col">
+      <div class="panel">
+        <div class="ph"><h2>Coming in</h2><span class="sub" style="margin:0">Booked by Asha</span></div>
+        <div id="booked"></div>
+      </div>
+      <div class="panel">
+        <div class="ph"><h2>Today by the hour</h2><span class="sub" style="margin:0" id="calltotal"></span></div>
+        <svg class="mini" id="deskchart" viewBox="0 0 300 130" role="img" aria-label="Calls today by hour and interest"></svg>
+        <div class="legend" id="desklegend"></div>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="ph"><h2>Today’s enquiries</h2>
+      <div class="chips" data-single id="filters">
+        <button class="chip" aria-pressed="true" data-f="all">All</button>
+        <button class="chip" aria-pressed="false" data-f="you">Needs you</button>
+        <button class="chip" aria-pressed="false" data-f="booked">Booked</button>
+        <button class="chip" aria-pressed="false" data-f="info">Info sent</button>
+        <button class="chip" aria-pressed="false" data-f="nr">Not reached</button>
+      </div></div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Name</th><th>Interested in</th><th>Ready to book?</th><th>Where it stands</th><th>Asked</th></tr></thead>
+      <tbody id="rows"></tbody></table></div>
+  </div>
+</section>
+
+  <footer class="foot">HappySmile voice assistant mockup for the Twenty2 product case, by Anupama. All names and numbers are sample data.</footer>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Enquiry details" aria-hidden="true"></aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const leads=[
+ {id:"rk",name:"Rohan Malhotra",first:"Rohan",interest:"Pain, needs a visit today",readyK:"now",ready:"Today",bucket:"you",what:["Waiting for you","urgent"],ago:"6 min ago",
+  task:{slot:"now",hard:true,title:"in pain",ctx:"Swelling on his left cheek since last night. Wants to come in today.",when:"6 min"},
+  summary:"Severe pain in a lower back tooth since last night, with swelling on the left cheek. Asha passed him to the front desk, but the line was busy, so she promised a callback within 30 minutes.",
+  readyWhy:"Wants a visit today.",
+  det:[["Interested in","Pain and swelling"],["Wants","A same-day visit"],["Speaks","English and Hindi"],["Promised","A call by 4:23 pm"]],
+  tl:[["3:51 pm","Asked for a call"],["3:51 pm","Asha called, he answered"],["3:53 pm","Transfer to front desk: line busy"],["3:53 pm","Callback promised by 4:23 pm"]],
+  tx:[["ai","Hi Rohan, this is Asha, HappySmile’s AI assistant. I saw you mentioned pain. Can you tell me a little about it?"],["lead","My tooth is killing me, and my face is swollen since morning."],["ai","I’m sorry, that sounds painful. I can’t give medical advice, so I’m connecting you to our clinic team for a visit today."],["ai","The line is busy right now. Someone from the clinic will call you back within 30 minutes."],["lead","Yes, please hurry."]]},
+ {id:"sp",name:"Sneha Arora",first:"Sneha",interest:"Implants, for her father",readyK:"month",ready:"Within a month",bucket:"you",what:["Waiting for you","warn"],ago:"9 min ago",
+  task:{slot:"now",title:"wants a person",ctx:"Implants for her father, 64. Asked about cost and number of visits. Prefers Hindi.",when:"3 min"},
+  summary:"Enquiring about an implant for her father, 64. Asked about cost and the number of visits, then asked to speak to a person.",
+  readyWhy:"Said they want to start within a month.",
+  det:[["Interested in","Implants, for her father"],["Wants to start","Within a month"],["Speaks","Hindi"]],
+  tl:[["3:48 pm","Asked for a call"],["3:49 pm","Asha called, she answered"],["3:54 pm","Asked for a person"]],
+  tx:[["ai","Namaste Sneha, this is Asha, HappySmile’s AI assistant, calling about your implants enquiry."],["lead","Yes, it’s for my father. How many visits does it take?"],["ai","Usually a few visits over some weeks. The dentist confirms the plan at the first consultation."],["lead","I’d rather talk to someone at the clinic about this."],["ai","Of course. I’ll pass your details on so you don’t have to repeat yourself."]]},
+ {id:"vj",name:"Vikram Sethi",first:"Vikram",interest:"Braces, for his son",readyK:"now",ready:"This week",bucket:"you",what:["Waiting for you","warn"],ago:"20 min ago",
+  task:{slot:"now",title:"needs an evening slot",ctx:"Braces for his son, 14. Weekdays after 6 pm only. Happy to go to Lajpat Nagar.",when:"by 4:30"},
+  summary:"Wants braces for his 14-year-old son. Only free on weekday evenings, and Saket has no evening slots this week.",
+  readyWhy:"Wanted to book this week but no slot matched.",
+  det:[["Interested in","Braces, for his son (14)"],["Free","Weekdays after 6 pm"],["Also fine with","Lajpat Nagar clinic"],["Speaks","Hindi"]],
+  tl:[["3:37 pm","Asked for a call"],["3:38 pm","Asha called, he answered"],["3:42 pm","No matching slot, callback promised by 4:30 pm"]],
+  tx:[["ai","Namaste Vikram ji, this is Asha, HappySmile’s AI assistant, about your braces enquiry."],["lead","It’s for my son. Only evenings work for us."],["ai","There are no evening slots at Saket this week. Someone from the clinic will call you by 4:30 pm with options."]]},
+ {id:"fs",name:"Farah Siddiqui",first:"Farah",interest:"Implants",readyK:"",ready:"Not asked yet",bucket:"nr",what:["Not reached",""],ago:"48 min ago",
+  task:{slot:"later",calm:true,title:"hasn’t picked up",ctx:"Asha tried three times and sent a WhatsApp. Next try at 6 pm.",when:"6 pm"},
+  summary:"No answer on three tries. A WhatsApp message was sent so she can choose a callback time.",
+  readyWhy:"No conversation yet.",
+  det:[["Interested in","Implants (from the form)"],["Next try","6:00 pm"]],
+  tl:[["3:11 pm","Asked for a call"],["3:11 pm","Call 1: no answer"],["3:26 pm","Call 2: no answer"],["3:56 pm","Call 3: no answer, WhatsApp sent"]],
+  tx:[]},
+ {id:"pd",name:"Priya Bansal",first:"Priya",interest:"Clear aligners",readyK:"now",ready:"Booked",bucket:"booked",what:["Booked by Asha","ok"],ago:"12 min ago",
+  visit:["Sat","11:00 am","Dr Mehra"],
+  summary:"Interested in clear aligners before her wedding in March. Booked a first consultation for Saturday at 11 am. Confirmation sent on WhatsApp.",
+  readyWhy:"Agreed to a slot on the call.",
+  det:[["Interested in","Clear aligners"],["Visit","Sat, 11:00 am, Dr Mehra"],["Worth knowing","Wedding in March, asked about EMI"]],
+  tl:[["3:45 pm","Asked for a call"],["3:46 pm","Asha called, she answered"],["3:49 pm","Visit booked, WhatsApp sent"]],
+  tx:[["ai","Hi Priya, this is Asha, HappySmile’s AI assistant, calling about your braces enquiry. Is now a good time?"],["lead","Yes. I’m looking at clear aligners, my wedding is in March."],["ai","Congratulations! A first consultation will tell you what’s possible by then. Saturday at 11 am with Dr Mehra is free. Does that work?"],["lead","Saturday works. Do you have EMI?"],["ai","Yes, the clinic will go through payment options at your visit. You’re booked for Saturday at 11 am, and I’ve sent the details to your WhatsApp."]]},
+ {id:"mi",name:"Meera Kapoor",first:"Meera",interest:"Check-up",readyK:"now",ready:"Booked",bucket:"booked",what:["Booked by Asha","ok"],ago:"1 hr ago",
+  visit:["Mon","10:00 am","Dr Bhatia"],
+  summary:"Booked a first consultation and check-up for Monday at 10 am.",
+  readyWhy:"Agreed to a slot on the call.",
+  det:[["Interested in","Check-up and cleaning"],["Visit","Mon, 10:00 am, Dr Bhatia"]],
+  tl:[["2:51 pm","Asked for a call"],["2:52 pm","Asha called, she answered"],["2:54 pm","Visit booked"]],
+  tx:[["ai","Hi Meera, this is Asha, HappySmile’s AI assistant. You asked about a check-up?"],["lead","Yes, Monday morning if possible."],["ai","Monday at 10 am is free for a first consultation and check-up. Shall I book it?"],["lead","Yes please."]]},
+ {id:"ar",name:"Aditya Gupta",first:"Aditya",interest:"Whitening",readyK:"look",ready:"Just looking",bucket:"info",what:["Info sent on WhatsApp",""],ago:"1 hr ago",
+  summary:"Comparing prices, no plans this month. Asha sent the whitening information on WhatsApp.",
+  readyWhy:"Said he’s only comparing prices for now.",
+  det:[["Interested in","Whitening"],["Wants to start","Not decided"]],
+  tl:[["2:58 pm","Asked for a call"],["2:59 pm","Asha called, he answered"],["3:01 pm","Info sent on WhatsApp"]],
+  tx:[["ai","Hi Aditya, this is Asha, HappySmile’s AI assistant, about your whitening enquiry."],["lead","Just checking prices for now, nothing planned."],["ai","No problem. I’ll send our whitening options and prices on WhatsApp so you can look whenever you’re ready."]]}
+];
+const done=new Set();
+
+function taskRow(l){const t=l.task;
+  return `<div class="task ${t.hard?"hard":""} ${t.calm?"calm":""}">
+    <div class="bar"></div>
+    <div class="body" data-open="${l.id}"><div class="t">${l.first} <span>${t.title}</span></div><div class="c">${t.ctx}</div></div>
+    <div class="r"><div class="w">${t.when}</div><a class="btn small ${t.calm?"ghost":""}" href="tel:+919811000000">Call</a><button class="btn small ghost" data-done="${l.id}">Done</button></div>
+    <div class="outcome" id="o-${l.id}"><span>What happened?</span>
+      <button class="chip" data-out="${l.id}" data-m="booked a visit">Booked</button>
+      <button class="chip" data-out="${l.id}" data-m="didn’t answer">No answer</button>
+      <button class="chip" data-out="${l.id}" data-m="not interested">Not interested</button>
+      <button class="chip" data-out="${l.id}" data-m="will be called again later">Try later</button></div>
+  </div>`}
+function renderDesk(){
+  const nowL=leads.filter(l=>l.task&&l.task.slot==="now"&&!done.has(l.id));
+  const laterL=leads.filter(l=>l.task&&l.task.slot==="later"&&!done.has(l.id));
+  document.getElementById("tasks").innerHTML=(nowL.length?nowL.map(taskRow).join(""):`<div class="empty">Nobody is waiting. New ones appear here.</div>`)+(laterL.length?`<div class="divider">Later today</div>`+laterL.map(taskRow).join(""):"");
+  document.getElementById("ncount").textContent=nowL.length;
+  document.getElementById("todayline").innerHTML=nowL.length?`<b>${nowL.length} ${nowL.length===1?"person is":"people are"} waiting</b> for your call.`:"Nobody is waiting for you right now.";
+  document.getElementById("booked").innerHTML=leads.filter(l=>l.visit).map(l=>`<div class="brow" data-open="${l.id}"><div><b>${l.name}</b><small>${l.interest}</small></div><div class="when">${l.visit[0]}, ${l.visit[1]}<small>${l.visit[2]}</small></div></div>`).join("");
+  renderRows();
+}
+let filter="all";
+function renderRows(){const st={ok:"ok",warn:"warn",urgent:"urgent","":""};
+  document.getElementById("rows").innerHTML=leads.filter(l=>filter==="all"||l.bucket===filter).map(l=>`
+   <tr data-open="${l.id}" tabindex="0"><td><span class="n">${l.name}</span></td><td>${l.interest}</td><td><span class="ready ${l.readyK}">${l.ready}</span></td>
+   <td><span class="pill ${done.has(l.id)?"":st[l.what[1]]}">${done.has(l.id)?"Handled by you":l.what[0]}</span></td><td>${l.ago}</td></tr>`).join("")}
+
+/* desk chart */
+const cats=[{n:"Treatments",c:"var(--c-treat)",v:[1,1,2,1,2,2,3,1]},{n:"Check-ups",c:"var(--c-visit)",v:[0,1,1,0,1,1,1,1]},{n:"Pain",c:"var(--c-urgent)",v:[0,0,0,1,0,0,1,0]},{n:"Other",c:"var(--c-other)",v:[0,0,0,0,1,0,0,1]}];
+const hours=["9","10","11","12","1","2","3","4"];
+function deskChart(){
+  const H=104,n=hours.length,gap=8,bw=(300-gap*(n-1))/n;
+  const tot=hours.map((_,i)=>cats.reduce((a,c)=>a+c.v[i],0));const max=Math.max(...tot);
+  let s=`<line x1="0" y1="${H}" x2="300" y2="${H}" stroke="var(--line)"/>`;
+  hours.forEach((h,i)=>{let y=H;const x=i*(bw+gap);cats.forEach(c=>{const v=c.v[i];if(v){const hh=v/max*(H-6);y-=hh;s+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(hh-1.5,1).toFixed(1)}" rx="3" fill="${c.c}"><title>${c.n}: ${v}</title></rect>`}});
+    s+=`<text x="${(x+bw/2).toFixed(1)}" y="122" font-size="11" text-anchor="middle" fill="var(--muted)">${h}${i===0?" am":i===3?" pm":""}</text>`});
+  document.getElementById("deskchart").innerHTML=s;
+  document.getElementById("calltotal").textContent=tot.reduce((a,b)=>a+b,0)+" calls so far";
+  document.getElementById("desklegend").innerHTML=cats.map(c=>`<span><i style="background:${c.c}"></i>${c.n} ${c.v.reduce((a,b)=>a+b,0)}</span>`).join("");
+}
+
+/* theme */
+function effTheme(){const t=document.documentElement.dataset.theme;return t||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}
+function themeUI(){const d=effTheme()==="dark";document.getElementById("themelabel").textContent=d?"Light mode":"Dark mode";document.getElementById("themeicon").textContent=d?"☀":"☾"}
+try{const t=localStorage.getItem("hs-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+document.getElementById("theme").addEventListener("click",()=>{const n=effTheme()==="dark"?"light":"dark";document.documentElement.dataset.theme=n;try{localStorage.setItem("hs-theme",n)}catch(e){}themeUI()});
+themeUI();
+
+function openLead(id){
+  const l=leads.find(x=>x.id===id);if(!l)return;
+  const d=document.getElementById("drawer");
+  d.innerHTML=`
+   <div class="head"><div><h2>${l.name}</h2><div style="color:var(--muted);font-size:13.5px">${l.interest}</div></div><button class="x" id="close" aria-label="Close">×</button></div>
+   <section style="border-top:0"><h3>In short</h3><p style="margin:0;font-size:15px">${l.summary}</p></section>
+   <section><h3>Ready to book?</h3><p style="margin:0;font-size:14.5px"><span class="ready ${l.readyK}"><b style="font-weight:600">${l.ready}.</b></span> ${l.readyWhy}</p></section>
+   <section><h3>What Asha found out</h3><dl>${l.det.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl></section>
+   <section><h3>What happened</h3><ul class="tl">${l.tl.map(([t,e])=>`<li><time>${t}</time><span>${e}</span></li>`).join("")}</ul></section>
+   <section><h3>The conversation</h3>${l.tx.length?`<div class="tx">${l.tx.map(([w,t])=>`<p class="${w}"><small>${w==="ai"?"Asha":l.first}</small>${t}</p>`).join("")}</div>`:`<p style="margin:0;color:var(--muted);font-size:14px">No conversation yet. It appears here once someone answers.</p>`}</section>
+   <section><a class="btn block" href="tel:+919811000000">Call ${l.first}</a></section>`;
+  d.classList.add("on");d.setAttribute("aria-hidden","false");
+  document.getElementById("scrim").classList.add("on");
+  document.getElementById("close").focus();
+}
+function closeLead(){const d=document.getElementById("drawer");d.classList.remove("on");d.setAttribute("aria-hidden","true");document.getElementById("scrim").classList.remove("on")}
+let tt;function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),2000)}
+
+const consent=document.getElementById("consent");
+consent.addEventListener("change",()=>{document.getElementById("reqbtn").disabled=!consent.checked;document.getElementById("reqhint").style.visibility=consent.checked?"hidden":"visible"});
+document.getElementById("pc").addEventListener("change",e=>{document.getElementById("painbtn").textContent="Call "+e.target.value.split(",")[0]+" clinic now"});
+
+document.addEventListener("click",e=>{
+  const o=e.target.closest("[data-open]");if(o){openLead(o.dataset.open);return}
+  if(e.target.id==="close"||e.target.id==="scrim"){closeLead();return}
+  const dn=e.target.closest("[data-done]");if(dn){document.getElementById("o-"+dn.dataset.done).classList.toggle("on");return}
+  const out=e.target.closest("[data-out]");if(out){const l=leads.find(x=>x.id===out.dataset.out);done.add(l.id);toast(`Saved. ${l.first} ${out.dataset.m}.`);renderDesk();return}
+  const ts=e.target.closest("[data-toast]");if(ts&&!ts.disabled)toast(ts.dataset.toast);
+  const fb=e.target.closest("#filters button");if(fb){filter=fb.dataset.f;renderRows()}
+  const sb=e.target.closest("[data-single] > button");if(sb){sb.parentElement.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b===sb))}
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLead();if(e.key==="Enter"&&e.target.matches("tr[data-open]"))openLead(e.target.dataset.open)});
+
+const views=["patient","dashboard"];
+function route(){const h=location.hash.slice(1);const v=views.includes(h)?h:"dashboard";
+  views.forEach(x=>document.getElementById("v-"+x).classList.toggle("on",x===v));
+  document.querySelectorAll("nav.tabs a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  closeLead();window.scrollTo(0,0)}
+window.addEventListener("hashchange",route);
+renderDesk();deskChart();route();
+</script>
+</body>
+</html>
